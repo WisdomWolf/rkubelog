@@ -6,7 +6,7 @@ RUN apk update && apk add --no-cache git ca-certificates wget && update-ca-certi
 RUN wget -O /etc/ssl/certs/papertrail-bundle.pem https://papertrailapp.com/tools/papertrail-bundle.pem
 WORKDIR /github.com/solarwinds/rkubelog
 ADD . .
-RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -mod vendor -ldflags='-w -s -extldflags "-static"' -a -o /rkubelog .
+RUN CGO_ENABLED=0 GOOS=linux go build -mod vendor -ldflags='-w -s -extldflags "-static"' -a -o /rkubelog .
 
 FROM alpine
 COPY --from=main /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
